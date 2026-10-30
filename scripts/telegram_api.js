@@ -9,7 +9,8 @@ const https = require("https");
 const { exec, execSync } = require("child_process");
 
 const SETTINGS_PATH = "/opt/genieacs/scripts/telegram_settings.json";
-const TELEBOT_CONFIG_PATH = "/root/telebot-acs/config.js";
+const TELEBOT_CONFIG_PATH = "/opt/genieacs/telebot-acs/config.js";
+const SYSTEMCTL_BIN = "sudo /bin/systemctl";
 
 const DEFAULT_CONFIG = {
   enabled: true,
@@ -88,7 +89,7 @@ function saveSettings(cfg) {
 
   // Attempt to restart systemd service if running
   try {
-    exec("systemctl restart genieacs-telebot", (err) => {
+    exec(`${SYSTEMCTL_BIN} restart genieacs-telebot`, (err) => {
       if (err) console.error("Error restarting genieacs-telebot:", err.message);
     });
   } catch (e) {}
@@ -175,7 +176,7 @@ function sendTelegramMessage(token, chatId, text) {
 
 function getServiceStatus() {
   try {
-    const status = execSync("systemctl is-active genieacs-telebot 2>&1", { encoding: "utf8" }).trim();
+    const status = execSync(`${SYSTEMCTL_BIN} is-active genieacs-telebot 2>&1`, { encoding: "utf8" }).trim();
     return status;
   } catch (e) {
     return e.stdout ? e.stdout.trim() : "inactive";
@@ -262,11 +263,11 @@ async function handleAction(ctx) {
 
   try {
     if (action === "restart") {
-      execSync("systemctl restart genieacs-telebot");
+      execSync(`${SYSTEMCTL_BIN} restart genieacs-telebot`);
     } else if (action === "start") {
-      execSync("systemctl start genieacs-telebot");
+      execSync(`${SYSTEMCTL_BIN} start genieacs-telebot`);
     } else if (action === "stop") {
-      execSync("systemctl stop genieacs-telebot");
+      execSync(`${SYSTEMCTL_BIN} stop genieacs-telebot`);
     }
     ctx.status = 200;
     ctx.body = { ok: true, status: getServiceStatus() };

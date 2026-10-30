@@ -20833,7 +20833,7 @@
   },
   {
     "_id": "ui.device.14.components.3.components.1.childParameters.2.parameter",
-    "value": "AssociatedDeviceRssi"
+    "value": "COALESCE(AssociatedDeviceRssi, X_HW_RSSI, X_ZTE-COM_RSSI, AssociatedDeviceAuthenticationState)"
   },
   {
     "_id": "ui.device.14.components.4.components.1.childParameters.2.label",
@@ -20841,7 +20841,7 @@
   },
   {
     "_id": "ui.device.14.components.4.components.1.childParameters.2.parameter",
-    "value": "AssociatedDeviceRssi"
+    "value": "COALESCE(AssociatedDeviceRssi, X_HW_RSSI, X_ZTE-COM_RSSI, AssociatedDeviceAuthenticationState)"
   },
   {
     "_id": "ui.device.14.components.5.components.1.childParameters.2.label",
@@ -20849,7 +20849,7 @@
   },
   {
     "_id": "ui.device.14.components.5.components.1.childParameters.2.parameter",
-    "value": "AssociatedDeviceRssi"
+    "value": "COALESCE(AssociatedDeviceRssi, X_HW_RSSI, X_ZTE-COM_RSSI, AssociatedDeviceAuthenticationState)"
   },
   {
     "_id": "ui.device.14.components.6.components.1.childParameters.2.label",
@@ -20857,7 +20857,7 @@
   },
   {
     "_id": "ui.device.14.components.6.components.1.childParameters.2.parameter",
-    "value": "AssociatedDeviceRssi"
+    "value": "COALESCE(AssociatedDeviceRssi, X_HW_RSSI, X_ZTE-COM_RSSI, AssociatedDeviceAuthenticationState)"
   },
   {
     "_id": "ui.device.14.components.7.components.1.childParameters.2.label",
@@ -20865,7 +20865,7 @@
   },
   {
     "_id": "ui.device.14.components.7.components.1.childParameters.2.parameter",
-    "value": "AssociatedDeviceRssi"
+    "value": "COALESCE(AssociatedDeviceRssi, X_HW_RSSI, X_ZTE-COM_RSSI, AssociatedDeviceAuthenticationState)"
   },
   {
     "_id": "ui.device.14.components.8.components.1.childParameters.2.label",
@@ -20873,7 +20873,7 @@
   },
   {
     "_id": "ui.device.14.components.8.components.1.childParameters.2.parameter",
-    "value": "AssociatedDeviceRssi"
+    "value": "COALESCE(AssociatedDeviceRssi, X_HW_RSSI, X_ZTE-COM_RSSI, AssociatedDeviceAuthenticationState)"
   },
   {
     "_id": "ui.device.14.components.9.components.1.childParameters.2.label",
@@ -20881,7 +20881,7 @@
   },
   {
     "_id": "ui.device.14.components.9.components.1.childParameters.2.parameter",
-    "value": "AssociatedDeviceRssi"
+    "value": "COALESCE(AssociatedDeviceRssi, X_HW_RSSI, X_ZTE-COM_RSSI, AssociatedDeviceAuthenticationState)"
   },
   {
     "_id": "ui.device.14.components.10.components.1.childParameters.2.label",
@@ -20889,7 +20889,7 @@
   },
   {
     "_id": "ui.device.14.components.10.components.1.childParameters.2.parameter",
-    "value": "AssociatedDeviceRssi"
+    "value": "COALESCE(AssociatedDeviceRssi, X_HW_RSSI, X_ZTE-COM_RSSI, AssociatedDeviceAuthenticationState)"
   },
   {
     "_id": "ui.device.24.type",
