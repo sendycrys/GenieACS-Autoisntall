@@ -169,7 +169,7 @@
   },
   {
     "_id": "ui.overview.charts.ont-type.slices.1_Huawei.filter",
-    "value": "DeviceID.Manufacturer = \"Huawei Technologies Co., Ltd\" OR DeviceID.Manufacturer = \"EcomTech Technologies Co., Ltd\""
+    "value": "DeviceID.Manufacturer = \"Huawei Technologies Co., Ltd\" OR DeviceID.Manufacturer = \"EcomTech Technologies Co., Ltd\" OR DeviceID.Manufacturer = \"HWTC\""
   },
   {
     "_id": "ui.overview.charts.ont-type.slices.1_Huawei.label",
@@ -201,7 +201,7 @@
   },
   {
     "_id": "ui.overview.charts.ont-type.slices.5_ZTE.filter",
-    "value": "DeviceID.Manufacturer = \"ZTE\""
+    "value": "DeviceID.Manufacturer = \"ZTE\" OR DeviceID.Manufacturer = \"ZTEG\" OR DeviceID.Manufacturer = \"ZICG\" OR DeviceID.Manufacturer = \"RTEG\""
   },
   {
     "_id": "ui.overview.charts.ont-type.slices.6_Mikrotik.color",
@@ -261,7 +261,7 @@
   },
   {
     "_id": "ui.overview.groups.2_register.charts.0",
-    "value": "'ont-type'"
+    "value": "'ont-model'"
   },
   {
     "_id": "ui.overview.groups.1_status.charts.2",
@@ -281,7 +281,7 @@
   },
   {
     "_id": "ui.overview.groups.2_register.charts.1",
-    "value": "'devreg'"
+    "value": "'ont-type'"
   },
   {
     "_id": "ui.overview.charts.temp.label",
@@ -405,7 +405,7 @@
   },
   {
     "_id": "ui.overview.charts.ont-type.slices.7_Other.filter",
-    "value": "DeviceID.Manufacturer <> \"MikroTik\" AND DeviceID.Manufacturer <> \"ZTE\" AND DeviceID.Manufacturer <> \"ZIONCOM\" AND DeviceID.Manufacturer <> \"EcomTech Technologies Co., Ltd\" AND DeviceID.Manufacturer <> \"FiberHome\" AND DeviceID.Manufacturer <> \"Huawei Technologies Co., Ltd\""
+    "value": "DeviceID.Manufacturer <> \"ZTE\" AND DeviceID.Manufacturer <> \"ZTEG\" AND DeviceID.Manufacturer <> \"ZICG\" AND DeviceID.Manufacturer <> \"RTEG\" AND DeviceID.Manufacturer <> \"CMDC\" AND DeviceID.Manufacturer <> \"Huawei Technologies Co., Ltd\" AND DeviceID.Manufacturer <> \"EcomTech Technologies Co., Ltd\" AND DeviceID.Manufacturer <> \"HWTC\" AND DeviceID.Manufacturer <> \"FiberHome\" AND DeviceID.Manufacturer <> \"ZIONCOM\" AND DeviceID.Manufacturer <> \"MikroTik\""
   },
   {
     "_id": "ui.overview.charts.ont-type.slices.7_Other.label",
@@ -20892,6 +20892,102 @@
     "value": "COALESCE(AssociatedDeviceRssi, X_HW_RSSI, X_ZTE-COM_RSSI, AssociatedDeviceAuthenticationState)"
   },
   {
+    "_id": "ui.device.18.label",
+    "value": "'⚡ Diagnostik Ping TR-069 (Ping dari Router ke Host)'"
+  },
+  {
+    "_id": "ui.device.18.components.0.type",
+    "value": "'parameter-list'"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.0.label",
+    "value": "'Target Host / IP'"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.0.parameter",
+    "value": "InternetGatewayDevice.IPPingDiagnostics.Host"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.1.label",
+    "value": "'Jumlah Paket'"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.1.parameter",
+    "value": "InternetGatewayDevice.IPPingDiagnostics.NumberOfRepetitions"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.2.label",
+    "value": "'Status Tes'"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.2.parameter",
+    "value": "InternetGatewayDevice.IPPingDiagnostics.DiagnosticsState"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.3.label",
+    "value": "'Paket Sukses'"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.3.parameter",
+    "value": "InternetGatewayDevice.IPPingDiagnostics.SuccessCount"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.4.label",
+    "value": "'Paket Gagal / Loss'"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.4.parameter",
+    "value": "InternetGatewayDevice.IPPingDiagnostics.FailureCount"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.5.label",
+    "value": "'Rata-rata Respon (ms)'"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.5.parameter",
+    "value": "InternetGatewayDevice.IPPingDiagnostics.AverageResponseTime"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.6.label",
+    "value": "'Min Respon (ms)'"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.6.parameter",
+    "value": "InternetGatewayDevice.IPPingDiagnostics.MinimumResponseTime"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.7.label",
+    "value": "'Max Respon (ms)'"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.7.parameter",
+    "value": "InternetGatewayDevice.IPPingDiagnostics.MaximumResponseTime"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.0.components.0.type",
+    "value": "'summon-button'"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.0.components.0.label",
+    "value": "'Mulai Ping'"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.0.components.0.parameters.0",
+    "value": "InternetGatewayDevice.IPPingDiagnostics.DiagnosticsState"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.0.components.0.parameters.1",
+    "value": "InternetGatewayDevice.IPPingDiagnostics.SuccessCount"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.0.components.0.parameters.2",
+    "value": "InternetGatewayDevice.IPPingDiagnostics.FailureCount"
+  },
+  {
+    "_id": "ui.device.18.components.0.parameters.0.components.0.parameters.3",
+    "value": "InternetGatewayDevice.IPPingDiagnostics.AverageResponseTime"
+  },
+  {
     "_id": "ui.device.24.type",
     "value": "'container'"
   },
@@ -20990,5 +21086,113 @@
   {
     "_id": "ui.device.24.components.0.parameters.0.components.0.parameters.3",
     "value": "InternetGatewayDevice.IPPingDiagnostics.AverageResponseTime"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.label",
+    "value": "'Tipe Perangkat'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.1_F663NV3a.label",
+    "value": "'F663NV3a'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.1_F663NV3a.color",
+    "value": "'#00DBFF'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.1_F663NV3a.filter",
+    "value": "DeviceID.ProductClass = \"F663NV3a\" OR DeviceID.ProductClass = \"F663NV3A\" OR DeviceID.ProductClass = \"F663NV3a-XPON\" OR DeviceID.ProductClass = \"ZX-F663NV3a XPON\""
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.2_F663NV9.label",
+    "value": "'F663NV9'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.2_F663NV9.color",
+    "value": "'#5BFF00'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.2_F663NV9.filter",
+    "value": "DeviceID.ProductClass = \"F663NV9\" OR DeviceID.ProductClass = \"F663NV9 XPON\""
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.3_F477V2.label",
+    "value": "'F477V2'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.3_F477V2.color",
+    "value": "'#FBF104'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.3_F477V2.filter",
+    "value": "DeviceID.ProductClass = \"F477V2 EPON\" OR DeviceID.ProductClass = \"F477V2\" OR DeviceID.ProductClass = \"ZXHN F477V2\""
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.4_XSF609.label",
+    "value": "'XSF609'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.4_XSF609.color",
+    "value": "'#A400FF'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.4_XSF609.filter",
+    "value": "DeviceID.ProductClass = \"XSF609\""
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.5_GM219.label",
+    "value": "'GM219'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.5_GM219.color",
+    "value": "'#FB0489'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.5_GM219.filter",
+    "value": "DeviceID.ProductClass = \"GM219\""
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.6_H1s.label",
+    "value": "'H1s-3 / CMDC'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.6_H1s.color",
+    "value": "'#0066FF'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.6_H1s.filter",
+    "value": "DeviceID.ProductClass = \"H1s-3\" OR DeviceID.ProductClass = \"H3-2S XPON\""
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.7_Other.label",
+    "value": "'Lainnya'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.7_Other.color",
+    "value": "'#D65315'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-model.slices.7_Other.filter",
+    "value": "DeviceID.ProductClass <> \"F663NV3a\" AND DeviceID.ProductClass <> \"F663NV3A\" AND DeviceID.ProductClass <> \"F663NV3a-XPON\" AND DeviceID.ProductClass <> \"ZX-F663NV3a XPON\" AND DeviceID.ProductClass <> \"F663NV9\" AND DeviceID.ProductClass <> \"F663NV9 XPON\" AND DeviceID.ProductClass <> \"F477V2 EPON\" AND DeviceID.ProductClass <> \"F477V2\" AND DeviceID.ProductClass <> \"ZXHN F477V2\" AND DeviceID.ProductClass <> \"XSF609\" AND DeviceID.ProductClass <> \"GM219\" AND DeviceID.ProductClass <> \"H1s-3\" AND DeviceID.ProductClass <> \"H3-2S XPON\""
+  },
+  {
+    "_id": "ui.overview.charts.ont-type.slices.3_CMDC.label",
+    "value": "'China Mobile'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-type.slices.3_CMDC.color",
+    "value": "'#0066FF'"
+  },
+  {
+    "_id": "ui.overview.charts.ont-type.slices.3_CMDC.filter",
+    "value": "DeviceID.Manufacturer = \"CMDC\""
+  },
+  {
+    "_id": "ui.overview.groups.3_register.label",
+    "value": "'Registrasi & Aktivasi Perangkat'"
+  },
+  {
+    "_id": "ui.overview.groups.3_register.charts.0",
+    "value": "'devreg'"
   }
 ]
