@@ -20829,7 +20829,7 @@
   },
   {
     "_id": "ui.device.14.components.3.components.1.childParameters.2.label",
-    "value": "'Sinyal / RSSI'"
+    "value": "'Info Klien / RSSI'"
   },
   {
     "_id": "ui.device.14.components.3.components.1.childParameters.2.parameter",
@@ -20837,7 +20837,7 @@
   },
   {
     "_id": "ui.device.14.components.4.components.1.childParameters.2.label",
-    "value": "'Sinyal / RSSI'"
+    "value": "'Info Klien / RSSI'"
   },
   {
     "_id": "ui.device.14.components.4.components.1.childParameters.2.parameter",
@@ -20845,7 +20845,7 @@
   },
   {
     "_id": "ui.device.14.components.5.components.1.childParameters.2.label",
-    "value": "'Sinyal / RSSI'"
+    "value": "'Info Klien / RSSI'"
   },
   {
     "_id": "ui.device.14.components.5.components.1.childParameters.2.parameter",
@@ -20853,7 +20853,7 @@
   },
   {
     "_id": "ui.device.14.components.6.components.1.childParameters.2.label",
-    "value": "'Sinyal / RSSI'"
+    "value": "'Info Klien / RSSI'"
   },
   {
     "_id": "ui.device.14.components.6.components.1.childParameters.2.parameter",
@@ -20861,7 +20861,7 @@
   },
   {
     "_id": "ui.device.14.components.7.components.1.childParameters.2.label",
-    "value": "'Sinyal / RSSI'"
+    "value": "'Info Klien / RSSI'"
   },
   {
     "_id": "ui.device.14.components.7.components.1.childParameters.2.parameter",
@@ -20869,7 +20869,7 @@
   },
   {
     "_id": "ui.device.14.components.8.components.1.childParameters.2.label",
-    "value": "'Sinyal / RSSI'"
+    "value": "'Info Klien / RSSI'"
   },
   {
     "_id": "ui.device.14.components.8.components.1.childParameters.2.parameter",
@@ -20877,7 +20877,7 @@
   },
   {
     "_id": "ui.device.14.components.9.components.1.childParameters.2.label",
-    "value": "'Sinyal / RSSI'"
+    "value": "'Info Klien / RSSI'"
   },
   {
     "_id": "ui.device.14.components.9.components.1.childParameters.2.parameter",
@@ -20885,106 +20885,110 @@
   },
   {
     "_id": "ui.device.14.components.10.components.1.childParameters.2.label",
-    "value": "'Sinyal / RSSI'"
+    "value": "'Info Klien / RSSI'"
   },
   {
     "_id": "ui.device.14.components.10.components.1.childParameters.2.parameter",
     "value": "AssociatedDeviceRssi"
   },
   {
-    "_id": "ui.device.18.label",
-    "value": "'⚡ Diagnostik Ping TR-069 (Ping dari Router ke Host)'"
+    "_id": "ui.device.24.type",
+    "value": "'container'"
   },
   {
-    "_id": "ui.device.18.components.0.type",
+    "_id": "ui.device.24.label",
+    "value": "'⚡ Diagnostik Ping TR-069 (Ping dari Router ke Internet)'"
+  },
+  {
+    "_id": "ui.device.24.components.0.type",
     "value": "'parameter-list'"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.0.label",
+    "_id": "ui.device.24.components.0.parameters.0.label",
     "value": "'Target Host / IP'"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.0.parameter",
+    "_id": "ui.device.24.components.0.parameters.0.parameter",
     "value": "InternetGatewayDevice.IPPingDiagnostics.Host"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.1.label",
+    "_id": "ui.device.24.components.0.parameters.1.label",
     "value": "'Jumlah Paket'"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.1.parameter",
+    "_id": "ui.device.24.components.0.parameters.1.parameter",
     "value": "InternetGatewayDevice.IPPingDiagnostics.NumberOfRepetitions"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.2.label",
-    "value": "'Status Tes'"
+    "_id": "ui.device.24.components.0.parameters.2.label",
+    "value": "'Status Pengujian'"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.2.parameter",
+    "_id": "ui.device.24.components.0.parameters.2.parameter",
     "value": "InternetGatewayDevice.IPPingDiagnostics.DiagnosticsState"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.3.label",
+    "_id": "ui.device.24.components.0.parameters.3.label",
     "value": "'Paket Sukses'"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.3.parameter",
+    "_id": "ui.device.24.components.0.parameters.3.parameter",
     "value": "InternetGatewayDevice.IPPingDiagnostics.SuccessCount"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.4.label",
+    "_id": "ui.device.24.components.0.parameters.4.label",
     "value": "'Paket Gagal / Loss'"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.4.parameter",
+    "_id": "ui.device.24.components.0.parameters.4.parameter",
     "value": "InternetGatewayDevice.IPPingDiagnostics.FailureCount"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.5.label",
+    "_id": "ui.device.24.components.0.parameters.5.label",
     "value": "'Rata-rata Respon (ms)'"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.5.parameter",
+    "_id": "ui.device.24.components.0.parameters.5.parameter",
     "value": "InternetGatewayDevice.IPPingDiagnostics.AverageResponseTime"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.6.label",
+    "_id": "ui.device.24.components.0.parameters.6.label",
     "value": "'Min Respon (ms)'"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.6.parameter",
+    "_id": "ui.device.24.components.0.parameters.6.parameter",
     "value": "InternetGatewayDevice.IPPingDiagnostics.MinimumResponseTime"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.7.label",
+    "_id": "ui.device.24.components.0.parameters.7.label",
     "value": "'Max Respon (ms)'"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.7.parameter",
+    "_id": "ui.device.24.components.0.parameters.7.parameter",
     "value": "InternetGatewayDevice.IPPingDiagnostics.MaximumResponseTime"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.0.components.0.type",
+    "_id": "ui.device.24.components.0.parameters.0.components.0.type",
     "value": "'summon-button'"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.0.components.0.label",
+    "_id": "ui.device.24.components.0.parameters.0.components.0.label",
     "value": "'Mulai Ping'"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.0.components.0.parameters.0",
+    "_id": "ui.device.24.components.0.parameters.0.components.0.parameters.0",
     "value": "InternetGatewayDevice.IPPingDiagnostics.DiagnosticsState"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.0.components.0.parameters.1",
+    "_id": "ui.device.24.components.0.parameters.0.components.0.parameters.1",
     "value": "InternetGatewayDevice.IPPingDiagnostics.SuccessCount"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.0.components.0.parameters.2",
+    "_id": "ui.device.24.components.0.parameters.0.components.0.parameters.2",
     "value": "InternetGatewayDevice.IPPingDiagnostics.FailureCount"
   },
   {
-    "_id": "ui.device.18.components.0.parameters.0.components.0.parameters.3",
+    "_id": "ui.device.24.components.0.parameters.0.components.0.parameters.3",
     "value": "InternetGatewayDevice.IPPingDiagnostics.AverageResponseTime"
   }
 ]
