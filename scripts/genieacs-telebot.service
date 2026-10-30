@@ -1,0 +1,17 @@
+[Unit]
+Description=GenieACS Telegram Monitoring Bot - Artha Media Network
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/telebot-acs
+ExecStart=/usr/bin/node /root/telebot-acs/index.js
+Restart=always
+RestartSec=5
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=genieacs-telebot
+
+[Install]
+WantedBy=multi-user.target
