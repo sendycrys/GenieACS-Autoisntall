@@ -65,18 +65,25 @@ class GenieACSBot {
         return !!this.bot;
     }
 
-    escapeMarkdown(text) {
-        if (typeof text !== 'string') text = String(text || '');
-        return text.replace(/[_*[\]()~`>#+=|{}.!\-]/g, '\\$&');
+    escapeHtml(text) {
+        if (typeof text !== 'string') text = String(text ?? '');
+        return text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
     }
 
-    async safeSendMessage(chatId, text, options = {}) {
+    async safeSendMessage(chatId, text, options = { parse_mode: 'HTML' }) {
         try {
             return await this.bot.sendMessage(chatId, text, options);
         } catch (e) {
-            if (options.parse_mode) {
-                console.warn(`[${this.name}] Markdown send failed, fallback to plain text: ${e.message}`);
-                const plain = text.replace(/\\([_*[\]()~`>#+=|{}.!\-])/g, '$1');
+            if (options && options.parse_mode) {
+                console.warn(`[${this.name}] Formatted send failed (${e.message}), fallback to plain text`);
+                const plain = text
+                    .replace(/<[^>]+>/g, '')
+                    .replace(/&lt;/g, '<')
+                    .replace(/&gt;/g, '>')
+                    .replace(/&amp;/g, '&');
                 return await this.bot.sendMessage(chatId, plain, {});
             }
             throw e;
@@ -130,10 +137,10 @@ class GenieACSBot {
         this.bot.onText(/\/myid/i, async (msg) => {
             const chatId = msg.chat.id;
             await this.safeSendMessage(chatId, 
-                `🆔 *ID Telegram Anda:*\n\n` +
-                `\`${chatId}\`\n\n` +
-                `Salin ID di atas untuk didaftarkan sebagai Admin di Panel GenieACS atau sebagai Pelanggan\\.`,
-                { parse_mode: 'MarkdownV2' }
+                `🆔 <b>ID Telegram Anda:</b>\n\n` +
+                `<code>${chatId}</code>\n\n` +
+                `Salin ID di atas untuk didaftarkan sebagai Admin di Panel GenieACS atau sebagai Pelanggan.`,
+                { parse_mode: 'HTML' }
             );
         });
 
@@ -145,48 +152,48 @@ class GenieACSBot {
 
             if (!isAdmin && !customer) {
                 return await this.safeSendMessage(chatId, 
-                    `👋 *Selamat datang di Bot GenieACS - ARTHA MEDIA NETWORK*\n\n` +
-                    `⚠️ Akun Telegram Anda belum terdaftar di sistem\\.\n\n` +
-                    `📱 *Langkah Pendaftaran:*\n` +
-                    `1\\. Ketik perintah /myid\n` +
-                    `2\\. Salin ID Telegram Anda\n` +
-                    `3\\. Berikan ke admin atau simpan di GenieACS Admin UI\\.\n`,
-                    { parse_mode: 'MarkdownV2' }
+                    `👋 <b>Selamat datang di Bot GenieACS - ARTHA MEDIA NETWORK</b>\n\n` +
+                    `⚠️ Akun Telegram Anda belum terdaftar di sistem.\n\n` +
+                    `📋 <b>Langkah Pendaftaran:</b>\n` +
+                    `1. Ketik perintah /myid\n` +
+                    `2. Salin ID Telegram Anda\n` +
+                    `3. Berikan ke admin atau simpan di GenieACS Admin UI.\n`,
+                    { parse_mode: 'HTML' }
                 );
             }
 
             if (isAdmin) {
                 const helpMsg = 
-                    `🏢 *ARTHA MEDIA NETWORK - GENIEACS BOT*\n` +
-                    `👑 *Admin Control Panel*\n\n` +
-                    `📱 *Perintah Monitoring:*\n` +
-                    `• \`/device\` atau \`/devices\` - Ringkasan & daftar perangkat\n` +
-                    `• \`/device <nama/SN/IP>\` - Cari perangkat spesifik\n` +
-                    `• \`/status <SN/User>\` - Cek detail koneksi & status ONT\n` +
-                    `• \`/signal <SN/User>\` - Cek redaman optik & suhu\n` +
-                    `• \`/wifi <SN/User>\` - Cek konfigurasi WiFi & total klien\n` +
-                    `• \`/users <SN/User>\` - Daftar IP & MAC klien terhubung\n\n` +
-                    `⚡ *Perintah Kontrol:*\n` +
-                    `• \`/reboot <SN/User>\` - Restart / reboot ONT jarak jauh\n` +
-                    `• \`/setwifi <SN/User> <SSID>\` - Ganti nama SSID WiFi\n` +
-                    `• \`/setpass <SN/User> <Password>\` - Ganti password WiFi\n\n` +
-                    `👥 *Perintah Pelanggan:*\n` +
-                    `• \`/customers\` - Daftar akun pelanggan bot\n` +
-                    `• \`/addcustomer <ID> <Nama> <SN>\` - Tambah akses pelanggan\n` +
-                    `• \`/delcustomer <ID>\` - Hapus akses pelanggan\n\n` +
-                    `💡 _Tips: Anda dapat menggunakan nama PPPoE atau Serial Number ONT untuk setiap perintah!_`;
+                    `📡 <b>ARTHA MEDIA NETWORK - GENIEACS BOT</b>\n` +
+                    `💻 <b>Admin Control Panel</b>\n\n` +
+                    `📋 <b>Perintah Monitoring:</b>\n` +
+                    `• <code>/device</code> atau <code>/devices</code> - Ringkasan &amp; daftar perangkat\n` +
+                    `• <code>/device &lt;nama/SN/IP&gt;</code> - Cari perangkat spesifik\n` +
+                    `• <code>/status &lt;SN/User&gt;</code> - Cek detail koneksi &amp; status ONT\n` +
+                    `• <code>/signal &lt;SN/User&gt;</code> - Cek redaman optik &amp; suhu\n` +
+                    `• <code>/wifi &lt;SN/User&gt;</code> - Cek konfigurasi WiFi &amp; total klien\n` +
+                    `• <code>/users &lt;SN/User&gt;</code> - Daftar IP &amp; MAC klien terhubung\n\n` +
+                    `⚙️ <b>Perintah Kontrol:</b>\n` +
+                    `• <code>/reboot &lt;SN/User&gt;</code> - Restart / reboot ONT jarak jauh\n` +
+                    `• <code>/setwifi &lt;SN/User&gt; &lt;SSID&gt;</code> - Ganti nama SSID WiFi\n` +
+                    `• <code>/setpass &lt;SN/User&gt; &lt;Password&gt;</code> - Ganti password WiFi\n\n` +
+                    `👥 <b>Perintah Pelanggan:</b>\n` +
+                    `• <code>/customers</code> - Daftar akun pelanggan bot\n` +
+                    `• <code>/addcustomer &lt;ID&gt; &lt;Nama&gt; &lt;SN&gt;</code> - Tambah akses pelanggan\n` +
+                    `• <code>/delcustomer &lt;ID&gt;</code> - Hapus akses pelanggan\n\n` +
+                    `💡 <i>Tips: Anda dapat menggunakan nama PPPoE atau Serial Number ONT untuk setiap perintah!</i>`;
 
-                await this.safeSendMessage(chatId, helpMsg, { parse_mode: 'MarkdownV2' });
+                await this.safeSendMessage(chatId, helpMsg, { parse_mode: 'HTML' });
             } else {
                 await this.safeSendMessage(chatId, 
-                    `👋 *Halo ${this.escapeMarkdown(customer.name)}*\n` +
-                    `Selamat datang di layanan bot mandiri ARTHA MEDIA NETWORK\\.\n\n` +
-                    `📱 *Perintah yang dapat digunakan:*\n` +
-                    `• \`/mystatus\` - Cek status koneksi router Anda\n` +
-                    `• \`/mywifi\` - Cek nama WiFi router Anda\n` +
-                    `• \`/changepass <password_baru>\` - Ubah password WiFi\n\n` +
-                    `❗ _Password WiFi minimal 8 karakter kombinasi huruf dan angka\\._`,
-                    { parse_mode: 'MarkdownV2' }
+                    `👋 <b>Halo ${this.escapeHtml(customer.name)}</b>\n` +
+                    `Selamat datang di layanan bot mandiri ARTHA MEDIA NETWORK.\n\n` +
+                    `📋 <b>Perintah yang dapat digunakan:</b>\n` +
+                    `• <code>/mystatus</code> - Cek status koneksi router Anda\n` +
+                    `• <code>/mywifi</code> - Cek nama WiFi router Anda\n` +
+                    `• <code>/changepass &lt;password_baru&gt;</code> - Ubah password WiFi\n\n` +
+                    `🔒 <i>Password WiFi minimal 8 karakter kombinasi huruf dan angka.</i>`,
+                    { parse_mode: 'HTML' }
                 );
             }
         });
@@ -221,10 +228,10 @@ class GenieACSBot {
                     });
 
                     if (filtered.length === 0) {
-                        return await this.safeSendMessage(chatId, `❌ Tidak ada perangkat yang cocok dengan: \`${this.escapeMarkdown(query)}\``, { parse_mode: 'MarkdownV2' });
+                        return await this.safeSendMessage(chatId, `❌ Tidak ada perangkat yang cocok dengan: <code>${this.escapeHtml(query)}</code>`, { parse_mode: 'HTML' });
                     }
 
-                    let message = `🔍 *Hasil Pencarian ("${this.escapeMarkdown(query)}"):* (${filtered.length} perangkat)\n\n`;
+                    let message = `🔍 <b>Hasil Pencarian ("${this.escapeHtml(query)}"):</b> (${filtered.length} perangkat)\n\n`;
                     filtered.slice(0, 10).forEach((device, index) => {
                         const vParams = device.VirtualParameters || {};
                         const devId = device._deviceId || {};
@@ -236,16 +243,16 @@ class GenieACSBot {
                         const status = isOnline ? '🟢 Online' : '🔴 Offline';
                         const targetId = user !== '-' ? user : sn;
 
-                        message += `*${index + 1}\\. ${this.escapeMarkdown(sn)}* [${status}]\n`;
-                        message += `👤 User: \`${this.escapeMarkdown(user)}\`\n`;
-                        message += `📡 IP: \`${this.escapeMarkdown(ip)}\` | RX: \`${this.escapeMarkdown(rx)} dBm\`\n`;
-                        message += `👉 \`/status ${this.escapeMarkdown(targetId)}\` | \`/wifi ${this.escapeMarkdown(targetId)}\` | \`/reboot ${this.escapeMarkdown(targetId)}\`\n\n`;
+                        message += `<b>${index + 1}. ${this.escapeHtml(sn)}</b> [${status}]\n`;
+                        message += `👤 User: <code>${this.escapeHtml(user)}</code>\n`;
+                        message += `🌐 IP: <code>${this.escapeHtml(ip)}</code> | RX: <code>${this.escapeHtml(rx)} dBm</code>\n`;
+                        message += `⚡ <code>/status ${this.escapeHtml(targetId)}</code> | <code>/wifi ${this.escapeHtml(targetId)}</code> | <code>/reboot ${this.escapeHtml(targetId)}</code>\n\n`;
                     });
 
                     if (filtered.length > 10) {
-                        message += `_Menampilkan 10 dari ${filtered.length} hasil. Persempit pencarian untuk hasil lebih spesifik._`;
+                        message += `<i>Menampilkan 10 dari ${filtered.length} hasil. Persempit pencarian untuk hasil lebih spesifik.</i>`;
                     }
-                    return await this.safeSendMessage(chatId, message, { parse_mode: 'MarkdownV2' });
+                    return await this.safeSendMessage(chatId, message, { parse_mode: 'HTML' });
                 }
 
                 // General list / pagination
@@ -263,9 +270,9 @@ class GenieACSBot {
                 });
                 const offlineCount = devices.length - onlineCount;
 
-                let message = `🏢 *ARTHA MEDIA NETWORK - DAFTAR DEVICE*\n`;
-                message += `📊 Total: *${devices.length}* | 🟢 Online: *${onlineCount}* | 🔴 Offline: *${offlineCount}*\n`;
-                message += `📄 Halaman *${currentPage}* dari *${totalPages}*\n\n`;
+                let message = `📡 <b>ARTHA MEDIA NETWORK - DAFTAR DEVICE</b>\n`;
+                message += `📊 Total: <b>${devices.length}</b> | 🟢 Online: <b>${onlineCount}</b> | 🔴 Offline: <b>${offlineCount}</b>\n`;
+                message += `📄 Halaman <b>${currentPage}</b> dari <b>${totalPages}</b>\n\n`;
 
                 pagedDevices.forEach((device, index) => {
                     const vParams = device.VirtualParameters || {};
@@ -278,17 +285,17 @@ class GenieACSBot {
                     const status = isOnline ? '🟢' : '🔴';
                     const targetId = user !== '-' ? user : sn;
 
-                    message += `${status} *${startIdx + index + 1}\\. ${this.escapeMarkdown(user !== '-' ? user : sn)}*\n`;
-                    message += `   SN: \`${this.escapeMarkdown(sn)}\` | IP: \`${this.escapeMarkdown(ip)}\`\n`;
-                    message += `   RX: \`${this.escapeMarkdown(rx)} dBm\` 👉 \`/status ${this.escapeMarkdown(targetId)}\`\n\n`;
+                    message += `${status} <b>${startIdx + index + 1}. ${this.escapeHtml(user !== '-' ? user : sn)}</b>\n`;
+                    message += `   SN: <code>${this.escapeHtml(sn)}</code> | IP: <code>${this.escapeHtml(ip)}</code>\n`;
+                    message += `   RX: <code>${this.escapeHtml(rx)} dBm</code> ⚡ <code>/status ${this.escapeHtml(targetId)}</code>\n\n`;
                 });
 
-                message += `💡 *Tips:* Ketik \`/device <nama/SN/IP>\` untuk cari perangkat.\n`;
+                message += `💡 <b>Tips:</b> Ketik <code>/device &lt;nama/SN/IP&gt;</code> untuk cari perangkat.\n`;
                 if (currentPage < totalPages) {
-                    message += `👉 Halaman berikutnya: \`/devices ${currentPage + 1}\``;
+                    message += `⚡ Halaman berikutnya: <code>/devices ${currentPage + 1}</code>`;
                 }
 
-                await this.safeSendMessage(chatId, message, { parse_mode: 'MarkdownV2' });
+                await this.safeSendMessage(chatId, message, { parse_mode: 'HTML' });
             } catch (error) {
                 console.error(`Error in /devices:`, error);
                 await this.safeSendMessage(chatId, '❌ Terjadi kesalahan saat mengambil daftar perangkat.');
@@ -302,14 +309,14 @@ class GenieACSBot {
 
             const searchTerm = match && match[1] ? match[1].trim() : null;
             if (!searchTerm) {
-                return await this.safeSendMessage(chatId, '❗ Format: `/status <SN atau PPPoE Username>`', { parse_mode: 'MarkdownV2' });
+                return await this.safeSendMessage(chatId, '❗ Format: <code>/status &lt;SN atau PPPoE Username&gt;</code>', { parse_mode: 'HTML' });
             }
 
             try {
                 const devices = await this.getDevicesFromGenieACS();
                 const device = this.findDeviceMatch(searchTerm, devices);
                 if (!device) {
-                    return await this.safeSendMessage(chatId, `❌ Perangkat \`${this.escapeMarkdown(searchTerm)}\` tidak ditemukan\\.`, { parse_mode: 'MarkdownV2' });
+                    return await this.safeSendMessage(chatId, `❌ Perangkat <code>${this.escapeHtml(searchTerm)}</code> tidak ditemukan.`, { parse_mode: 'HTML' });
                 }
 
                 const vParams = device.VirtualParameters || {};
@@ -322,29 +329,29 @@ class GenieACSBot {
                 const targetId = user !== '-' ? user : sn;
 
                 const message = 
-                    `📱 *INFORMASI PERANGKAT*\n\n` +
-                    `👤 *Pelanggan:* \`${this.escapeMarkdown(user)}\`\n` +
-                    `📱 *SN:* \`${this.escapeMarkdown(sn)}\`\n` +
-                    `🏷️ *Model:* \`${this.escapeMarkdown(model)}\`\n` +
-                    `⚡ *Mode:* \`${this.escapeMarkdown(vParams.getponmode?._value || '-')}\`\n\n` +
-                    `🌐 *Jaringan:*\n` +
+                    `📋 <b>INFORMASI PERANGKAT</b>\n\n` +
+                    `👤 <b>Pelanggan:</b> <code>${this.escapeHtml(user)}</code>\n` +
+                    `📱 <b>SN:</b> <code>${this.escapeHtml(sn)}</code>\n` +
+                    `🏷️ <b>Model:</b> <code>${this.escapeHtml(model)}</code>\n` +
+                    `⚡ <b>Mode:</b> <code>${this.escapeHtml(vParams.getponmode?._value || '-')}</code>\n\n` +
+                    `🌐 <b>Jaringan:</b>\n` +
                     `• Status: ${status}\n` +
-                    `• IP PPPoE: \`${this.escapeMarkdown(vParams.pppoeIP?._value || '-')}\`\n` +
-                    `• IP TR069: \`${this.escapeMarkdown(vParams.IPTR069?._value || '-')}\`\n` +
-                    `• Uptime Router: \`${this.escapeMarkdown(vParams.getdeviceuptime?._value || '-')}\`\n` +
-                    `• Uptime PPPoE: \`${this.escapeMarkdown(vParams.getpppuptime?._value || '-')}\`\n\n` +
-                    `📶 *Optik & Suhu:*\n` +
-                    `• RX Power: \`${this.escapeMarkdown(vParams.RXPower?._value || '-')} dBm\`\n` +
-                    `• Suhu ONT: \`${this.escapeMarkdown(vParams.gettemp?._value || '-')} °C\`\n\n` +
-                    `📡 *WiFi:*\n` +
-                    `• SSID: \`${this.escapeMarkdown(vParams.WifiSSID?._value || '-')}\`\n` +
-                    `• Klien Aktif: *${this.escapeMarkdown(String(vParams.activedevices?._value || '0'))} user*\n\n` +
-                    `⚡ *Aksi Cepat:*\n` +
-                    `\`/signal ${this.escapeMarkdown(targetId)}\` - Cek Signal\n` +
-                    `\`/wifi ${this.escapeMarkdown(targetId)}\` - Info WiFi\n` +
-                    `\`/reboot ${this.escapeMarkdown(targetId)}\` - Restart Device`;
+                    `• IP PPPoE: <code>${this.escapeHtml(vParams.pppoeIP?._value || '-')}</code>\n` +
+                    `• IP TR069: <code>${this.escapeHtml(vParams.IPTR069?._value || '-')}</code>\n` +
+                    `• Uptime Router: <code>${this.escapeHtml(vParams.getdeviceuptime?._value || '-')}</code>\n` +
+                    `• Uptime PPPoE: <code>${this.escapeHtml(vParams.getpppuptime?._value || '-')}</code>\n\n` +
+                    `📶 <b>Optik &amp; Suhu:</b>\n` +
+                    `• RX Power: <code>${this.escapeHtml(vParams.RXPower?._value || '-')} dBm</code>\n` +
+                    `• Suhu ONT: <code>${this.escapeHtml(vParams.gettemp?._value || '-')} °C</code>\n\n` +
+                    `📡 <b>WiFi:</b>\n` +
+                    `• SSID: <code>${this.escapeHtml(vParams.WifiSSID?._value || '-')}</code>\n` +
+                    `• Klien Aktif: <b>${this.escapeHtml(String(vParams.activedevices?._value || '0'))} user</b>\n\n` +
+                    `⚙️ <b>Aksi Cepat:</b>\n` +
+                    `<code>/signal ${this.escapeHtml(targetId)}</code> - Cek Signal\n` +
+                    `<code>/wifi ${this.escapeHtml(targetId)}</code> - Info WiFi\n` +
+                    `<code>/reboot ${this.escapeHtml(targetId)}</code> - Restart Device`;
 
-                await this.safeSendMessage(chatId, message, { parse_mode: 'MarkdownV2' });
+                await this.safeSendMessage(chatId, message, { parse_mode: 'HTML' });
             } catch (err) {
                 console.error('Error in /status:', err);
                 await this.safeSendMessage(chatId, '❌ Gagal mengambil status perangkat.');
@@ -358,14 +365,14 @@ class GenieACSBot {
 
             const searchTerm = match && match[1] ? match[1].trim() : null;
             if (!searchTerm) {
-                return await this.safeSendMessage(chatId, '❗ Format: `/signal <SN atau PPPoE Username>`', { parse_mode: 'MarkdownV2' });
+                return await this.safeSendMessage(chatId, '❗ Format: <code>/signal &lt;SN atau PPPoE Username&gt;</code>', { parse_mode: 'HTML' });
             }
 
             try {
                 const devices = await this.getDevicesFromGenieACS();
                 const device = this.findDeviceMatch(searchTerm, devices);
                 if (!device) {
-                    return await this.safeSendMessage(chatId, `❌ Perangkat \`${this.escapeMarkdown(searchTerm)}\` tidak ditemukan\\.`, { parse_mode: 'MarkdownV2' });
+                    return await this.safeSendMessage(chatId, `❌ Perangkat <code>${this.escapeHtml(searchTerm)}</code> tidak ditemukan.`, { parse_mode: 'HTML' });
                 }
 
                 const vParams = device.VirtualParameters || {};
@@ -381,16 +388,16 @@ class GenieACSBot {
                 }
 
                 const message = 
-                    `📶 *PEMANTAUAN SINYAL OPTIK*\n\n` +
-                    `👤 User: \`${this.escapeMarkdown(user)}\`\n` +
-                    `📱 SN: \`${this.escapeMarkdown(sn)}\`\n` +
-                    `⚡ Mode: \`${this.escapeMarkdown(vParams.getponmode?._value || 'EPON')}\`\n\n` +
-                    `📊 *Hasil Pengukuran:*\n` +
-                    `• RX Optical Power: *${this.escapeMarkdown(vParams.RXPower?._value || '-')} dBm*\n` +
+                    `📶 <b>PEMANTAUAN SINYAL OPTIK</b>\n\n` +
+                    `👤 User: <code>${this.escapeHtml(user)}</code>\n` +
+                    `📱 SN: <code>${this.escapeHtml(sn)}</code>\n` +
+                    `⚡ Mode: <code>${this.escapeHtml(vParams.getponmode?._value || 'EPON')}</code>\n\n` +
+                    `📊 <b>Hasil Pengukuran:</b>\n` +
+                    `• RX Optical Power: <b>${this.escapeHtml(vParams.RXPower?._value || '-')} dBm</b>\n` +
                     `• Kondisi: ${rxStatus}\n` +
-                    `• Suhu Perangkat: \`${this.escapeMarkdown(vParams.gettemp?._value || '-')} °C\``;
+                    `• Suhu Perangkat: <code>${this.escapeHtml(vParams.gettemp?._value || '-')} °C</code>`;
 
-                await this.safeSendMessage(chatId, message, { parse_mode: 'MarkdownV2' });
+                await this.safeSendMessage(chatId, message, { parse_mode: 'HTML' });
             } catch (err) {
                 console.error('Error in /signal:', err);
                 await this.safeSendMessage(chatId, '❌ Gagal membaca sinyal optik.');
@@ -404,14 +411,14 @@ class GenieACSBot {
 
             const searchTerm = match && match[1] ? match[1].trim() : null;
             if (!searchTerm) {
-                return await this.safeSendMessage(chatId, '❗ Format: `/wifi <SN atau PPPoE Username>`', { parse_mode: 'MarkdownV2' });
+                return await this.safeSendMessage(chatId, '❗ Format: <code>/wifi &lt;SN atau PPPoE Username&gt;</code>', { parse_mode: 'HTML' });
             }
 
             try {
                 const devices = await this.getDevicesFromGenieACS();
                 const device = this.findDeviceMatch(searchTerm, devices);
                 if (!device) {
-                    return await this.safeSendMessage(chatId, `❌ Perangkat \`${this.escapeMarkdown(searchTerm)}\` tidak ditemukan\\.`, { parse_mode: 'MarkdownV2' });
+                    return await this.safeSendMessage(chatId, `❌ Perangkat <code>${this.escapeHtml(searchTerm)}</code> tidak ditemukan.`, { parse_mode: 'HTML' });
                 }
 
                 const vParams = device.VirtualParameters || {};
@@ -422,18 +429,18 @@ class GenieACSBot {
                 const targetId = user !== '-' ? user : sn;
 
                 const message = 
-                    `📡 *DETAIL WIFI (WLAN 1)*\n\n` +
-                    `👤 User: \`${this.escapeMarkdown(user)}\`\n` +
-                    `📱 SN: \`${this.escapeMarkdown(sn)}\`\n\n` +
-                    `• Nama SSID: \`${this.escapeMarkdown(wlan?.SSID?._value || vParams.WifiSSID?._value || '-')}\`\n` +
+                    `📡 <b>DETAIL WIFI (WLAN 1)</b>\n\n` +
+                    `👤 User: <code>${this.escapeHtml(user)}</code>\n` +
+                    `📱 SN: <code>${this.escapeHtml(sn)}</code>\n\n` +
+                    `• Nama SSID: <code>${this.escapeHtml(wlan?.SSID?._value || vParams.WifiSSID?._value || '-')}</code>\n` +
                     `• Status Radio: ${wlan?.Enable?._value ? '🟢 Aktif (Enabled)' : '🔴 Nonaktif'}\n` +
-                    `• Channel: \`${this.escapeMarkdown(String(wlan?.Channel?._value || '-'))}\`\n` +
-                    `• Klien Terhubung: *${this.escapeMarkdown(String(wlan?.TotalAssociations?._value || vParams.activedevices?._value || '0'))} perangkat*\n\n` +
-                    `👉 \`/users ${this.escapeMarkdown(targetId)}\` - Daftar klien WiFi\n` +
-                    `👉 \`/setwifi ${this.escapeMarkdown(targetId)} <NamaSSID>\` - Ubah nama WiFi\n` +
-                    `👉 \`/setpass ${this.escapeMarkdown(targetId)} <Password>\` - Ubah password WiFi`;
+                    `• Channel: <code>${this.escapeHtml(String(wlan?.Channel?._value || '-'))}</code>\n` +
+                    `• Klien Terhubung: <b>${this.escapeHtml(String(wlan?.TotalAssociations?._value || vParams.activedevices?._value || '0'))} perangkat</b>\n\n` +
+                    `⚡ <code>/users ${this.escapeHtml(targetId)}</code> - Daftar klien WiFi\n` +
+                    `⚡ <code>/setwifi ${this.escapeHtml(targetId)} &lt;NamaSSID&gt;</code> - Ubah nama WiFi\n` +
+                    `⚡ <code>/setpass ${this.escapeHtml(targetId)} &lt;Password&gt;</code> - Ubah password WiFi`;
 
-                await this.safeSendMessage(chatId, message, { parse_mode: 'MarkdownV2' });
+                await this.safeSendMessage(chatId, message, { parse_mode: 'HTML' });
             } catch (err) {
                 console.error('Error in /wifi:', err);
                 await this.safeSendMessage(chatId, '❌ Gagal mengambil data WiFi.');
@@ -447,14 +454,14 @@ class GenieACSBot {
 
             const searchTerm = match && match[1] ? match[1].trim() : null;
             if (!searchTerm) {
-                return await this.safeSendMessage(chatId, '❗ Format: `/users <SN atau PPPoE Username>`', { parse_mode: 'MarkdownV2' });
+                return await this.safeSendMessage(chatId, '❗ Format: <code>/users &lt;SN atau PPPoE Username&gt;</code>', { parse_mode: 'HTML' });
             }
 
             try {
                 const devices = await this.getDevicesFromGenieACS();
                 const device = this.findDeviceMatch(searchTerm, devices);
                 if (!device) {
-                    return await this.safeSendMessage(chatId, `❌ Perangkat \`${this.escapeMarkdown(searchTerm)}\` tidak ditemukan\\.`, { parse_mode: 'MarkdownV2' });
+                    return await this.safeSendMessage(chatId, `❌ Perangkat <code>${this.escapeHtml(searchTerm)}</code> tidak ditemukan.`, { parse_mode: 'HTML' });
                 }
 
                 const vParams = device.VirtualParameters || {};
@@ -465,11 +472,11 @@ class GenieACSBot {
                 const assoc = wlan?.AssociatedDevice || {};
                 const clientKeys = Object.keys(assoc).filter(k => !k.startsWith('_'));
 
-                let message = `👥 *KLIEN WIFI TERHUBUNG (SSID 1)*\n\n`;
-                message += `👤 User: \`${this.escapeMarkdown(user)}\`\n`;
-                message += `📱 SN: \`${this.escapeMarkdown(sn)}\`\n`;
-                message += `📡 SSID: \`${this.escapeMarkdown(wlan?.SSID?._value || vParams.WifiSSID?._value || '-')}\`\n`;
-                message += `📊 Total Klien: *${clientKeys.length || vParams.activedevices?._value || 0} perangkat*\n\n`;
+                let message = `👥 <b>KLIEN WIFI TERHUBUNG (SSID 1)</b>\n\n`;
+                message += `👤 User: <code>${this.escapeHtml(user)}</code>\n`;
+                message += `📱 SN: <code>${this.escapeHtml(sn)}</code>\n`;
+                message += `📡 SSID: <code>${this.escapeHtml(wlan?.SSID?._value || vParams.WifiSSID?._value || '-')}</code>\n`;
+                message += `📊 Total Klien: <b>${clientKeys.length || vParams.activedevices?._value || 0} perangkat</b>\n\n`;
 
                 if (clientKeys.length > 0) {
                     clientKeys.forEach((k, idx) => {
@@ -477,14 +484,14 @@ class GenieACSBot {
                         const ip = cl.AssociatedDeviceIPAddress?._value || '-';
                         const mac = cl.AssociatedDeviceMACAddress?._value || '-';
                         const auth = cl.AssociatedDeviceAuthenticationState?._value || 'TRUE';
-                        message += `${idx + 1}\\. IP: \`${this.escapeMarkdown(ip)}\`\n`;
-                        message += `   MAC: \`${this.escapeMarkdown(mac)}\` [${auth === 'TRUE' ? '🟢 Aktif' : '⚪'}]\n`;
+                        message += `${idx + 1}. IP: <code>${this.escapeHtml(ip)}</code>\n`;
+                        message += `   MAC: <code>${this.escapeHtml(mac)}</code> [${auth === 'TRUE' ? '🟢 Aktif' : '⚪'}]\n`;
                     });
                 } else {
-                    message += `_Tidak ada klien aktif yang terhubung ke SSID 1 saat ini\\._\n`;
+                    message += `<i>Tidak ada klien aktif yang terhubung ke SSID 1 saat ini.</i>\n`;
                 }
 
-                await this.safeSendMessage(chatId, message, { parse_mode: 'MarkdownV2' });
+                await this.safeSendMessage(chatId, message, { parse_mode: 'HTML' });
             } catch (err) {
                 console.error('Error in /users:', err);
                 await this.safeSendMessage(chatId, '❌ Gagal mengambil daftar pengguna WiFi.');
@@ -498,14 +505,14 @@ class GenieACSBot {
 
             const searchTerm = match && match[1] ? match[1].trim() : null;
             if (!searchTerm) {
-                return await this.safeSendMessage(chatId, '❗ Format: `/reboot <SN atau PPPoE Username>`', { parse_mode: 'MarkdownV2' });
+                return await this.safeSendMessage(chatId, '❗ Format: <code>/reboot &lt;SN atau PPPoE Username&gt;</code>', { parse_mode: 'HTML' });
             }
 
             try {
                 const devices = await this.getDevicesFromGenieACS();
                 const device = this.findDeviceMatch(searchTerm, devices);
                 if (!device) {
-                    return await this.safeSendMessage(chatId, `❌ Perangkat \`${this.escapeMarkdown(searchTerm)}\` tidak ditemukan\\.`, { parse_mode: 'MarkdownV2' });
+                    return await this.safeSendMessage(chatId, `❌ Perangkat <code>${this.escapeHtml(searchTerm)}</code> tidak ditemukan.`, { parse_mode: 'HTML' });
                 }
 
                 const vParams = device.VirtualParameters || {};
@@ -513,21 +520,21 @@ class GenieACSBot {
                 const user = vParams.pppoeUsername?._value || vParams.pppoeUsername2?._value || '-';
                 const sn = vParams.getSerialNumber?._value || devId._SerialNumber || '-';
 
-                await this.safeSendMessage(chatId, `⏳ Mengirim perintah reboot ke \`${this.escapeMarkdown(user !== '-' ? user : sn)}\`...`, { parse_mode: 'MarkdownV2' });
+                await this.safeSendMessage(chatId, `⏳ Mengirim perintah reboot ke <code>${this.escapeHtml(user !== '-' ? user : sn)}</code>...`, { parse_mode: 'HTML' });
 
                 await this.rebootDevice(encodeURIComponent(device._id));
 
                 await this.safeSendMessage(chatId, 
-                    `🔄 *PERINTAH REBOOT BERHASIL DIKIRIM*\n\n` +
-                    `👤 User: \`${this.escapeMarkdown(user)}\`\n` +
-                    `📱 SN: \`${this.escapeMarkdown(sn)}\`\n` +
-                    `🌐 IP: \`${this.escapeMarkdown(vParams.pppoeIP?._value || '-')}\`\n\n` +
-                    `Perangkat sedang melakukan proses restart otomatis\\.`,
-                    { parse_mode: 'MarkdownV2' }
+                    `🔄 <b>PERINTAH REBOOT BERHASIL DIKIRIM</b>\n\n` +
+                    `👤 User: <code>${this.escapeHtml(user)}</code>\n` +
+                    `📱 SN: <code>${this.escapeHtml(sn)}</code>\n` +
+                    `🌐 IP: <code>${this.escapeHtml(vParams.pppoeIP?._value || '-')}</code>\n\n` +
+                    `Perangkat sedang melakukan proses restart otomatis.`,
+                    { parse_mode: 'HTML' }
                 );
             } catch (err) {
                 console.error('Error in /reboot:', err);
-                await this.safeSendMessage(chatId, `❌ Gagal reboot perangkat: ${this.escapeMarkdown(err.message)}`, { parse_mode: 'MarkdownV2' });
+                await this.safeSendMessage(chatId, `❌ Gagal reboot perangkat: ${this.escapeHtml(err.message)}`, { parse_mode: 'HTML' });
             }
         });
 
@@ -543,7 +550,7 @@ class GenieACSBot {
                 const devices = await this.getDevicesFromGenieACS();
                 const device = this.findDeviceMatch(searchTerm, devices);
                 if (!device) {
-                    return await this.safeSendMessage(chatId, `❌ Perangkat \`${this.escapeMarkdown(searchTerm)}\` tidak ditemukan\\.`, { parse_mode: 'MarkdownV2' });
+                    return await this.safeSendMessage(chatId, `❌ Perangkat <code>${this.escapeHtml(searchTerm)}</code> tidak ditemukan.`, { parse_mode: 'HTML' });
                 }
 
                 const vParams = device.VirtualParameters || {};
@@ -554,16 +561,16 @@ class GenieACSBot {
                 await this.setWiFiSSID(encodeURIComponent(device._id), newSSID);
 
                 await this.safeSendMessage(chatId, 
-                    `✅ *NAMA WIFI BERHASIL DIUBAH\\!*\n\n` +
-                    `👤 User: \`${this.escapeMarkdown(user)}\`\n` +
-                    `📱 SN: \`${this.escapeMarkdown(sn)}\`\n` +
-                    `📡 SSID Baru: \`${this.escapeMarkdown(newSSID)}\`\n\n` +
-                    `❗ Perangkat klien perlu reconnect ke SSID baru\\.`,
-                    { parse_mode: 'MarkdownV2' }
+                    `✅ <b>NAMA WIFI BERHASIL DIUBAH!</b>\n\n` +
+                    `👤 User: <code>${this.escapeHtml(user)}</code>\n` +
+                    `📱 SN: <code>${this.escapeHtml(sn)}</code>\n` +
+                    `📡 SSID Baru: <code>${this.escapeHtml(newSSID)}</code>\n\n` +
+                    `⚠️ Perangkat klien perlu reconnect ke SSID baru.`,
+                    { parse_mode: 'HTML' }
                 );
             } catch (err) {
                 console.error('Error in /setwifi:', err);
-                await this.safeSendMessage(chatId, `❌ Gagal mengubah nama WiFi: ${this.escapeMarkdown(err.message)}`, { parse_mode: 'MarkdownV2' });
+                await this.safeSendMessage(chatId, `❌ Gagal mengubah nama WiFi: ${this.escapeHtml(err.message)}`, { parse_mode: 'HTML' });
             }
         });
 
@@ -583,7 +590,7 @@ class GenieACSBot {
                 const devices = await this.getDevicesFromGenieACS();
                 const device = this.findDeviceMatch(searchTerm, devices);
                 if (!device) {
-                    return await this.safeSendMessage(chatId, `❌ Perangkat \`${this.escapeMarkdown(searchTerm)}\` tidak ditemukan\\.`, { parse_mode: 'MarkdownV2' });
+                    return await this.safeSendMessage(chatId, `❌ Perangkat <code>${this.escapeHtml(searchTerm)}</code> tidak ditemukan.`, { parse_mode: 'HTML' });
                 }
 
                 const vParams = device.VirtualParameters || {};
@@ -594,16 +601,16 @@ class GenieACSBot {
                 await this.setWiFiPassword(encodeURIComponent(device._id), newPass);
 
                 await this.safeSendMessage(chatId, 
-                    `✅ *PASSWORD WIFI BERHASIL DIUBAH\\!*\n\n` +
-                    `👤 User: \`${this.escapeMarkdown(user)}\`\n` +
-                    `📱 SN: \`${this.escapeMarkdown(sn)}\`\n` +
-                    `🔑 Password Baru: \`${this.escapeMarkdown(newPass)}\`\n\n` +
-                    `❗ Klien perlu reconnect menggunakan password baru\\.`,
-                    { parse_mode: 'MarkdownV2' }
+                    `✅ <b>PASSWORD WIFI BERHASIL DIUBAH!</b>\n\n` +
+                    `👤 User: <code>${this.escapeHtml(user)}</code>\n` +
+                    `📱 SN: <code>${this.escapeHtml(sn)}</code>\n` +
+                    `🔑 Password Baru: <code>${this.escapeHtml(newPass)}</code>\n\n` +
+                    `⚠️ Klien perlu reconnect menggunakan password baru.`,
+                    { parse_mode: 'HTML' }
                 );
             } catch (err) {
                 console.error('Error in /setpass:', err);
-                await this.safeSendMessage(chatId, `❌ Gagal mengubah password WiFi: ${this.escapeMarkdown(err.message)}`, { parse_mode: 'MarkdownV2' });
+                await this.safeSendMessage(chatId, `❌ Gagal mengubah password WiFi: ${this.escapeHtml(err.message)}`, { parse_mode: 'HTML' });
             }
         });
 
@@ -625,14 +632,14 @@ class GenieACSBot {
                 const status = isOnline ? '🟢 Online' : '🔴 Offline';
 
                 const message = 
-                    `📱 *STATUS ROUTER ANDA*\n\n` +
-                    `Pelanggan: *${this.escapeMarkdown(customer.name)}*\n` +
+                    `📱 <b>STATUS ROUTER ANDA</b>\n\n` +
+                    `Pelanggan: <b>${this.escapeHtml(customer.name)}</b>\n` +
                     `Status: ${status}\n` +
-                    `Signal Optik: \`${this.escapeMarkdown(vParams.RXPower?._value || '-')} dBm\`\n` +
-                    `IP Address: \`${this.escapeMarkdown(vParams.pppoeIP?._value || '-')}\`\n` +
-                    `Uptime: \`${this.escapeMarkdown(vParams.getdeviceuptime?._value || '-')}\`\n`;
+                    `Signal Optik: <code>${this.escapeHtml(vParams.RXPower?._value || '-')} dBm</code>\n` +
+                    `IP Address: <code>${this.escapeHtml(vParams.pppoeIP?._value || '-')}</code>\n` +
+                    `Uptime: <code>${this.escapeHtml(vParams.getdeviceuptime?._value || '-')}</code>\n`;
 
-                await this.safeSendMessage(chatId, message, { parse_mode: 'MarkdownV2' });
+                await this.safeSendMessage(chatId, message, { parse_mode: 'HTML' });
             } catch (error) {
                 await this.safeSendMessage(chatId, '❌ Gagal mengambil status perangkat Anda.');
             }
@@ -658,10 +665,10 @@ class GenieACSBot {
 
                 await this.setWiFiPassword(encodeURIComponent(device._id), newPass);
                 await this.safeSendMessage(chatId, 
-                    `✅ *Password WiFi berhasil diubah\\!*\n\n` +
-                    `Password baru: \`${this.escapeMarkdown(newPass)}\`\n\n` +
-                    `❗ Silakan sambungkan kembali perangkat WiFi Anda dengan password baru\\.`,
-                    { parse_mode: 'MarkdownV2' }
+                    `✅ <b>Password WiFi berhasil diubah!</b>\n\n` +
+                    `Password baru: <code>${this.escapeHtml(newPass)}</code>\n\n` +
+                    `⚠️ Silakan sambungkan kembali perangkat WiFi Anda dengan password baru.`,
+                    { parse_mode: 'HTML' }
                 );
             } catch (error) {
                 await this.safeSendMessage(chatId, '❌ Gagal mengubah password WiFi.');
@@ -677,21 +684,21 @@ class GenieACSBot {
             const keys = Object.keys(customers);
             if (keys.length === 0) {
                 return await this.safeSendMessage(chatId, 
-                    '👥 *Daftar Pelanggan Bot:*\n_Belum ada pelanggan yang didaftarkan\\._\n\n' +
-                    'Gunakan: `/addcustomer <ID_TELEGRAM> <NAMA> <SN>`',
-                    { parse_mode: 'MarkdownV2' }
+                    '👥 <b>Daftar Pelanggan Bot:</b>\n<i>Belum ada pelanggan yang didaftarkan.</i>\n\n' +
+                    'Gunakan: <code>/addcustomer &lt;ID_TELEGRAM&gt; &lt;NAMA&gt; &lt;SN&gt;</code>',
+                    { parse_mode: 'HTML' }
                 );
             }
 
-            let message = `👥 *DAFTAR PELANGGAN BOT (${keys.length}):*\n\n`;
+            let message = `👥 <b>DAFTAR PELANGGAN BOT (${keys.length}):</b>\n\n`;
             keys.forEach((id, idx) => {
                 const c = customers[id];
-                message += `${idx + 1}\\. *${this.escapeMarkdown(c.name)}*\n`;
-                message += `   ID: \`${id}\` | SN: \`${this.escapeMarkdown(c.deviceSN)}\`\n`;
-                message += `   Hapus: \`/delcustomer ${id}\`\n\n`;
+                message += `${idx + 1}. <b>${this.escapeHtml(c.name)}</b>\n`;
+                message += `   ID: <code>${id}</code> | SN: <code>${this.escapeHtml(c.deviceSN)}</code>\n`;
+                message += `   Hapus: <code>/delcustomer ${id}</code>\n\n`;
             });
 
-            await this.safeSendMessage(chatId, message, { parse_mode: 'MarkdownV2' });
+            await this.safeSendMessage(chatId, message, { parse_mode: 'HTML' });
         });
 
         // Admin: /addcustomer <ID> <Nama> <SN>
@@ -711,11 +718,11 @@ class GenieACSBot {
                 await this.saveConfig();
 
                 await this.safeSendMessage(chatId, 
-                    `✅ *Pelanggan berhasil didaftarkan\\!*\n\n` +
-                    `Nama: \`${this.escapeMarkdown(customerName)}\`\n` +
-                    `ID: \`${telegramId}\`\n` +
-                    `SN: \`${this.escapeMarkdown(deviceSN)}\``,
-                    { parse_mode: 'MarkdownV2' }
+                    `✅ <b>Pelanggan berhasil didaftarkan!</b>\n\n` +
+                    `Nama: <code>${this.escapeHtml(customerName)}</code>\n` +
+                    `ID: <code>${telegramId}</code>\n` +
+                    `SN: <code>${this.escapeHtml(deviceSN)}</code>`,
+                    { parse_mode: 'HTML' }
                 );
             } catch (err) {
                 await this.safeSendMessage(chatId, '❌ Gagal mendaftarkan pelanggan.');
@@ -732,9 +739,9 @@ class GenieACSBot {
                 const name = this.config.customers[telegramId].name;
                 delete this.config.customers[telegramId];
                 await this.saveConfig();
-                await this.safeSendMessage(chatId, `✅ Pelanggan *${this.escapeMarkdown(name)}* (\`${telegramId}\`) berhasil dihapus\\.`, { parse_mode: 'MarkdownV2' });
+                await this.safeSendMessage(chatId, `✅ Pelanggan <b>${this.escapeHtml(name)}</b> (<code>${telegramId}</code>) berhasil dihapus.`, { parse_mode: 'HTML' });
             } else {
-                await this.safeSendMessage(chatId, `❌ Pelanggan dengan ID \`${telegramId}\` tidak ditemukan\\.`, { parse_mode: 'MarkdownV2' });
+                await this.safeSendMessage(chatId, `❌ Pelanggan dengan ID <code>${telegramId}</code> tidak ditemukan.`, { parse_mode: 'HTML' });
             }
         });
     }
