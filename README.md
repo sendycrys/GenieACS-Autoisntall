@@ -16,7 +16,13 @@
 
 ## ✨ Fitur Unggulan
 
-- 🎨 **Tampilan Dark Premium Cyberpunk:** Desain visual UI modern, bersih, kontras tinggi, dan responsif.
+- 🎨 **Tampilan Dark Premium Cyberpunk:** Desain visual UI modern, bersih, kontras tinggi, dan responsif dengan status indikator Online/Offline real-time yang akurat.
+- ⚡ **Diagnostik Ping TR-069 Interaktif:** Fitur ping langsung dari perangkat router ONT ke IP/domain tujuan (seperti `8.8.8.8` atau gateway) via TR-143 `IPPingDiagnostics`. Dilengkapi input target host, jumlah paket, status pengujian live, statistik sukses/loss, dan waktu respon rata-rata (RTT ms).
+- 📶 **Pemantauan Sinyal RSSI Klien WiFi:** Menampilkan daftar perangkat HP/laptop yang terhubung ke WiFi ONT lengkap dengan kekuatan sinyal RSSI (dBm) dan badge kualitas sinyal otomatis:
+  - 🟢 **Sangat Bagus** (`>= -60 dBm`)
+  - 🟢 **Bagus** (`-61 s/d -70 dBm`)
+  - 🟡 **Sedang** (`-71 s/d -80 dBm`)
+  - 🔴 **Lemah** (`< -80 dBm`)
 - 🔍 **Pencarian Cepat PPPoE & SN:** Filter instan berdasarkan *PPPoE Username*, *IP PPPoE*, *SSID*, dan *Serial Number (SN)* langsung dari kolom pencarian atas.
 - 📊 **Tabel Parameter Lengkap:**
   - Status Online / Offline

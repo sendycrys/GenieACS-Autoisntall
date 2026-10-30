@@ -76,7 +76,7 @@
   {
     "_id": "Refresh VP",
     "channel": "Provision",
-    "precondition": "",
+    "precondition": "_deviceId._Manufacturer <> \"CMDC\" AND _id NOT LIKE \"%CMDC%\"",
     "weight": 0,
     "events": {},
     "configurations": [

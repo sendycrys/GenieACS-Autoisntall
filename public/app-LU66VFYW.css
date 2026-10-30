@@ -2618,3 +2618,265 @@ h1.device-title {
   border-color: rgba(248, 113, 113, 0.5) !important;
   color: #ffffff !important;
 }
+
+
+/* ======================================================================
+   WiFi Client RSSI Badges
+   ====================================================================== */
+.rssi-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.rssi-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.rssi-pill.rssi-excellent {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+.rssi-pill.rssi-excellent .rssi-dot {
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+.rssi-pill.rssi-good {
+  background: rgba(52, 211, 153, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.35);
+}
+.rssi-pill.rssi-good .rssi-dot {
+  background: #34d399;
+  box-shadow: 0 0 6px #34d399;
+}
+.rssi-pill.rssi-fair {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+.rssi-pill.rssi-fair .rssi-dot {
+  background: #f59e0b;
+  box-shadow: 0 0 6px #f59e0b;
+}
+.rssi-pill.rssi-poor {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+.rssi-pill.rssi-poor .rssi-dot {
+  background: #ef4444;
+  box-shadow: 0 0 8px #ef4444;
+}
+
+/* ======================================================================
+   Ping Diagnostics Panel (TR-069)
+   ====================================================================== */
+.ping-diag-card {
+  margin: 16px 0 24px 0;
+  background: linear-gradient(135deg, rgba(13, 22, 38, 0.85) 0%, rgba(8, 15, 28, 0.95) 100%);
+  border: 1px solid rgba(0, 219, 255, 0.25);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  padding: 16px 20px;
+  backdrop-filter: blur(10px);
+}
+.ping-diag-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+}
+.ping-diag-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ping-diag-icon {
+  font-size: 1.2rem;
+  color: #00dbff;
+  filter: drop-shadow(0 0 6px #00dbff);
+}
+.ping-diag-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  letter-spacing: 0.3px;
+}
+.ping-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 12px;
+  border-radius: 9999px;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+.ping-status-badge.idle {
+  background: rgba(100, 116, 139, 0.15);
+  color: #94a3b8;
+  border: 1px solid rgba(100, 116, 139, 0.3);
+}
+.ping-status-badge.running {
+  background: rgba(0, 219, 255, 0.15);
+  color: #00dbff;
+  border: 1px solid rgba(0, 219, 255, 0.4);
+}
+.ping-spin {
+  width: 8px;
+  height: 8px;
+  border: 2px solid #00dbff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: ping-rotate 0.8s linear infinite;
+}
+@keyframes ping-rotate {
+  to { transform: rotate(360deg); }
+}
+.ping-status-badge.success {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+.ping-status-badge.warning {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.ping-input-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.ping-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.ping-input-group label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.ping-input-host {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(0, 219, 255, 0.3);
+  border-radius: 6px;
+  padding: 7px 12px;
+  font-size: 0.88rem;
+  color: #f8fafc;
+  outline: none;
+  min-width: 220px;
+  transition: all 0.2s;
+}
+.ping-input-host:focus {
+  border-color: #00dbff;
+  box-shadow: 0 0 10px rgba(0, 219, 255, 0.3);
+}
+.ping-input-reps {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(0, 219, 255, 0.3);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 0.88rem;
+  color: #f8fafc;
+  outline: none;
+  width: 70px;
+  text-align: center;
+}
+.ping-btn-run {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: #ffffff;
+  border: 1px solid #38bdf8;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(14, 165, 233, 0.3);
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ping-btn-run:hover:not(:disabled) {
+  background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+  box-shadow: 0 0 16px rgba(14, 165, 233, 0.6);
+  transform: translateY(-1px);
+}
+.ping-btn-run:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.ping-btn-spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid #ffffff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: ping-rotate 0.8s linear infinite;
+  display: inline-block;
+}
+
+.ping-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+.ping-stat-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ping-stat-label {
+  font-size: 0.72rem;
+  color: #64748b;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+.ping-stat-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+.ping-stat-val.host-val {
+  color: #00dbff;
+  font-family: monospace;
+}
+.ping-stat-val.rtt-val {
+  color: #10b981;
+}
+.ping-stat-val .succ-text {
+  color: #10b981;
+}
+.ping-stat-val .fail-text {
+  color: #ef4444;
+}
+.ping-error-msg {
+  margin-top: 10px;
+  color: #ef4444;
+  font-size: 0.82rem;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
