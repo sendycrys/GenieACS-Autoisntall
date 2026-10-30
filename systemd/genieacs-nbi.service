@@ -1,0 +1,11 @@
+[Unit]
+Description=GenieACS NBI
+After=network.target
+ 
+[Service]
+User=genieacs
+EnvironmentFile=/opt/genieacs/genieacs.env
+ExecStart=/usr/bin/genieacs-nbi
+ 
+[Install]
+WantedBy=default.target

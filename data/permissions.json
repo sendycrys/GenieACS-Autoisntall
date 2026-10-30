@@ -1,0 +1,108 @@
+[
+  {
+    "_id": "admin:devices:3",
+    "role": "admin",
+    "resource": "devices",
+    "access": 3,
+    "validate": "true"
+  },
+  {
+    "_id": "admin:users:3",
+    "role": "admin",
+    "resource": "users",
+    "access": 3,
+    "validate": "true"
+  },
+  {
+    "_id": "admin:virtualParameters:3",
+    "role": "admin",
+    "resource": "virtualParameters",
+    "access": 3,
+    "validate": "true"
+  },
+  {
+    "_id": "admin:provisions:3",
+    "role": "admin",
+    "resource": "provisions",
+    "access": 3,
+    "validate": "true"
+  },
+  {
+    "_id": "admin:files:3",
+    "role": "admin",
+    "resource": "files",
+    "access": 3,
+    "validate": "true"
+  },
+  {
+    "_id": "admin:config:3",
+    "role": "admin",
+    "resource": "config",
+    "access": 3,
+    "validate": "true"
+  },
+  {
+    "_id": "admin:permissions:3",
+    "role": "admin",
+    "resource": "permissions",
+    "access": 3,
+    "validate": "true"
+  },
+  {
+    "_id": "admin:faults:3",
+    "role": "admin",
+    "resource": "faults",
+    "access": 3,
+    "validate": "true"
+  },
+  {
+    "_id": "admin:presets:3",
+    "role": "admin",
+    "resource": "presets",
+    "access": 3,
+    "validate": "true"
+  },
+  {
+    "_id": "user:config:3",
+    "role": "user",
+    "resource": "config",
+    "filter": "",
+    "access": 3,
+    "validate": "true"
+  },
+  {
+    "_id": "user:devices:3",
+    "role": "user",
+    "resource": "devices",
+    "access": 3,
+    "validate": "true"
+  },
+  {
+    "_id": "user:faults:3",
+    "role": "user",
+    "resource": "faults",
+    "access": 3,
+    "validate": "true"
+  },
+  {
+    "_id": "user:files:3",
+    "role": "user",
+    "resource": "files",
+    "access": 3,
+    "validate": "true"
+  },
+  {
+    "_id": "user:presets:3",
+    "role": "user",
+    "resource": "presets",
+    "access": 3,
+    "validate": "true"
+  },
+  {
+    "_id": "user:provisions:3",
+    "role": "user",
+    "resource": "provisions",
+    "access": 3,
+    "validate": "true"
+  }
+]

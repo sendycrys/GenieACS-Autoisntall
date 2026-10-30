@@ -1,0 +1,11 @@
+[Unit]
+Description=GenieACS FS
+After=network.target
+ 
+[Service]
+User=genieacs
+EnvironmentFile=/opt/genieacs/genieacs.env
+ExecStart=/usr/bin/genieacs-fs
+ 
+[Install]
+WantedBy=default.target

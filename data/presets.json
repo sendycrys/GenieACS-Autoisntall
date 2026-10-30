@@ -1,0 +1,90 @@
+[
+  {
+    "_id": "bootstrap",
+    "weight": 0,
+    "channel": "bootstrap",
+    "events": {
+      "0 BOOTSTRAP": true
+    },
+    "precondition": "",
+    "configurations": [
+      {
+        "type": "provision",
+        "name": "bootstrap",
+        "args": null
+      }
+    ]
+  },
+  {
+    "_id": "default",
+    "weight": 0,
+    "channel": "default",
+    "precondition": "_deviceId._Manufacturer <> \"CMDC\" AND _id NOT LIKE \"%CMDC%\"",
+    "events": {},
+    "configurations": [
+      {
+        "type": "provision",
+        "name": "default",
+        "args": null
+      }
+    ]
+  },
+  {
+    "_id": "inform",
+    "weight": 0,
+    "channel": "inform",
+    "precondition": "_deviceId._Manufacturer <> \"CMDC\" AND _id NOT LIKE \"%CMDC%\"",
+    "events": {},
+    "configurations": [
+      {
+        "type": "provision",
+        "name": "inform",
+        "args": null
+      }
+    ]
+  },
+  {
+    "_id": "Auto Admin",
+    "channel": "Auto Admin",
+    "weight": 0,
+    "precondition": "",
+    "events": {
+      "0 BOOTSTRAP": true
+    },
+    "schedule": "",
+    "configurations": [
+      {
+        "type": "provision",
+        "name": "Auto Admin",
+        "args": null
+      }
+    ]
+  },
+  {
+    "_id": "CMDC H1s Safe",
+    "precondition": "_deviceId._Manufacturer = \"CMDC\" OR _id LIKE \"%CMDC%\"",
+    "weight": 0,
+    "events": {},
+    "configurations": [
+      {
+        "type": "provision",
+        "name": "cmdc_h1s_safe",
+        "args": null
+      }
+    ]
+  },
+  {
+    "_id": "Refresh VP",
+    "channel": "Provision",
+    "precondition": "",
+    "weight": 0,
+    "events": {},
+    "configurations": [
+      {
+        "type": "provision",
+        "name": "refresh parameter virtual setiap kali ONT menghubungi ACS",
+        "args": null
+      }
+    ]
+  }
+]
