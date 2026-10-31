@@ -597,7 +597,7 @@
   },
   {
     "_id": "ui.index.5.parameter",
-    "value": "VirtualParameters.activedevices"
+    "value": "VirtualParameters.hotspotdevices"
   },
   {
     "_id": "ui.index.6.label",
@@ -21194,5 +21194,9 @@
   {
     "_id": "ui.overview.groups.3_register.charts.0",
     "value": "'devreg'"
+  },
+  {
+    "_id": "ui.index.0.parameters.13",
+    "value": "VirtualParameters.hotspotdevices"
   }
 ]

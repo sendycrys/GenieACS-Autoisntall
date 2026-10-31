@@ -25,6 +25,6 @@
   },
   {
     "_id": "refresh parameter virtual setiap kali ONT menghubungi ACS",
-    "script": "// Refresh all virtual parameters on Inform\ndeclare(\"VirtualParameters.WifiSSID\", {value: Date.now()});\ndeclare(\"VirtualParameters.WifiPassword\", {value: Date.now()});\ndeclare(\"VirtualParameters.pppoeMac\", {value: Date.now()});\ndeclare(\"VirtualParameters.gettemp\", {value: Date.now()});\ndeclare(\"VirtualParameters.RXPower\", {value: Date.now()});\ndeclare(\"VirtualParameters.pppoeIP\", {value: Date.now()});\ndeclare(\"VirtualParameters.pppoeUsername\", {value: Date.now()});\ndeclare(\"VirtualParameters.activedevices\", {value: Date.now()});\n"
+    "script": "// Refresh all virtual parameters on Inform\ndeclare(\"VirtualParameters.WifiSSID\", {value: Date.now()});\ndeclare(\"VirtualParameters.WifiPassword\", {value: Date.now()});\ndeclare(\"VirtualParameters.pppoeMac\", {value: Date.now()});\ndeclare(\"VirtualParameters.gettemp\", {value: Date.now()});\ndeclare(\"VirtualParameters.RXPower\", {value: Date.now()});\ndeclare(\"VirtualParameters.pppoeIP\", {value: Date.now()});\ndeclare(\"VirtualParameters.pppoeUsername\", {value: Date.now()});\ndeclare(\"VirtualParameters.activedevices\", {value: Date.now()});\n\ndeclare(\"VirtualParameters.hotspotdevices\", {value: Date.now()});\n"
   }
 ]
