@@ -1,5 +1,9 @@
 [
   {
+    "_id": "cwmp.maxCommitIterations",
+    "value": "100"
+  },
+  {
     "_id": "ui.filters.2.type",
     "value": "'string'"
   },
